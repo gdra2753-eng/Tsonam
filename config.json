@@ -1,0 +1,44 @@
+{
+  "type": "SSH",
+  "name": "Zin Private SSH",
+  "sshTunnelConfig": {
+    "injectConfig": {
+      "enabled": true,
+      "mode": "websocket"
+    }
+  },
+  "encryptedLockedConfig": {
+    "LockedAppConfig": {
+      "VersionCode": 32,
+      "VersionName": "1.0.26",
+      "ConnectedMessage": "تم الاتصال بسيرفر Zin بنجاح ✔",
+      "ExpiredAtTimestamp": 0,
+      "TunnelType": "SSH",
+      "IsSshLocked": false
+    },
+    "EncryptedLockedConfig": {
+      "InjectConfig": {
+        "IsEncrypted": false,
+        "EncryptedMode": "youtube.com",
+        "EncryptedProxyHost": "youtube.com",
+        "EncryptedProxyPort": "443",
+        "EncryptedServerNameIndication": "youtube.com",
+        "EncryptedPayload": "GET / HTTP/1.1[crlf]Host: [YOUR_APP_LINK].run.app[crlf]Connection: Upgrade[crlf]Upgrade: websocket[crlf]User-Agent: [ua][crlf][crlf]",
+        "EncryptedDnsttDnsHost": "1.1.1.1",
+        "EncryptedDnsttDnsPort": "53"
+      },
+      "SshConfig": {
+        "IsEncrypted": false,
+        "IsLocked": false,
+        "EncryptedHost": "127.0.0.1",
+        "EncryptedPort": "22",
+        "EncryptedUsername": "zin_user",
+        "EncryptedPassword": "ZinCloud@2024"
+      },
+      "V2RayConfig": {
+        "IsEncrypted": false,
+        "EncryptedConfig": []
+      }
+    }
+  }
+}
