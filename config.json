@@ -1,44 +1,54 @@
 {
-  "type": "SSH",
-  "name": "Zin Private SSH",
-  "sshTunnelConfig": {
-    "injectConfig": {
-      "enabled": true,
-      "mode": "websocket"
-    }
+  "log": {
+    "loglevel": "warning"
   },
-  "encryptedLockedConfig": {
-    "LockedAppConfig": {
-      "VersionCode": 32,
-      "VersionName": "1.0.26",
-      "ConnectedMessage": "تم الاتصال بسيرفر Zin بنجاح ✔",
-      "ExpiredAtTimestamp": 0,
-      "TunnelType": "SSH",
-      "IsSshLocked": false
-    },
-    "EncryptedLockedConfig": {
-      "InjectConfig": {
-        "IsEncrypted": false,
-        "EncryptedMode": "youtube.com",
-        "EncryptedProxyHost": "youtube.com",
-        "EncryptedProxyPort": "443",
-        "EncryptedServerNameIndication": "youtube.com",
-        "EncryptedPayload": "GET / HTTP/1.1[crlf]Host: [YOUR_APP_LINK].run.app[crlf]Connection: Upgrade[crlf]Upgrade: websocket[crlf]User-Agent: [ua][crlf][crlf]",
-        "EncryptedDnsttDnsHost": "1.1.1.1",
-        "EncryptedDnsttDnsPort": "53"
-      },
-      "SshConfig": {
-        "IsEncrypted": false,
-        "IsLocked": false,
-        "EncryptedHost": "127.0.0.1",
-        "EncryptedPort": "22",
-        "EncryptedUsername": "zin_user",
-        "EncryptedPassword": "ZinCloud@2024"
-      },
-      "V2RayConfig": {
-        "IsEncrypted": false,
-        "EncryptedConfig": []
+  "inbounds": [
+    {
+      "port": 10808,
+      "listen": "0.0.0.0",
+      "protocol": "socks",
+      "settings": {
+        "auth": "noauth",
+        "udp": true
       }
     }
-  }
+  ],
+  "outbounds": [
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "YouTube.com",
+            "port": 443,
+            "users": [
+              {
+                "id": "00000000-0000-0000-0000-000000000000",
+                "encryption": "none"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "serverName": "YouTube.com",
+          "allowInsecure": false
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "localhost:22",
+            "X-Host-Extra": "example.com",
+            "Service": "SSH",
+            "ModeX": "Bypass",
+            "Upgrade": "websocket",
+            "Method": "PATCH"
+          }
+        }
+      }
+    }
+  ]
 }
