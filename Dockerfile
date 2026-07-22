@@ -1,24 +1,14 @@
-# استخدام نسخة مستقرة وخفيفة من Ubuntu
-FROM ubuntu:22.04
+# استخدام نسخة رسمية وخفيفة من Alpine تحتوي على نواة Xray
+FROM teddysun/xray:latest
 
-# تثبيت الخدمات الأساسية (SSH و أدوات المساعدة)
-RUN apt-get update && apt-get install -y \
-    openssh-server \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+# تحديد دليل العمل داخل الحاوية
+WORKDIR /etc/xray
 
-# إعداد بيانات الدخول (خاصة بك)
-# المستخدم: zin_user | كلمة المرور: ZinCloud@2024
-RUN useradd -m -s /bin/bash zin_user && echo "zin_user:ZinCloud@2024" | chpasswd
+# نسخ ملف الإعدادات من المجلد المحلي إلى داخل الحاوية
+COPY config.json /etc/xray/config.json
 
-# إعدادات أمان الـ SSH ليتوافق مع الاتصال السحابي
-RUN mkdir /var/run/sshd
-RUN sed -i 's/#PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
-RUN sed -i 's/#PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
-RUN sed -i 's/Port 22/Port 8080/' /etc/ssh/sshd_config
+# فتح المنفذ المحلي 10808 (الذي سيتصل به متصفحك أو جهازك)
+EXPOSE 10808
 
-# فتح المنفذ 8080 (المنفذ الافتراضي لـ Cloud Run)
-EXPOSE 8080
-
-# تشغيل السيرفر
-CMD ["/usr/sbin/sshd", "-D", "-e"]
+# الأمر المسؤول عن تشغيل النفق فور تشغيل الحاوية
+CMD ["xray", "-config", "/etc/xray/config.json"]
